@@ -11,7 +11,7 @@ import axios from "axios";
 
 // Your Gemini API key
 const apiKey = import.meta.env.VITE_genAIKey;
-const genAI = new GoogleGenerativeAI(apiKey);
+const genAI = new GoogleGenerativeAI("AIzaSyAnnWX-2uSUF8a-zhmGS3BL_-zKH9o32rE");
 
 const model = genAI.getGenerativeModel({
   model: "gemini-1.5-flash",

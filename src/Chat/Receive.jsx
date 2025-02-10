@@ -10,28 +10,23 @@ const Receive = ({ Message, memes }) => {
   console.log(Message);
   const response = JSON.parse(Message);
   const [url, setUrl] = useState("");
-
   useEffect(() => {
     if (response.meme) {
-      // Find the meme in the memes array
-
-      const meme = memes.find((meme) => meme.id === response.memeId) || "";
-
+      const meme = memes.find((m) => m.id === response.memeId);
       if (meme) {
-        let url = meme.blank.replace(".png", "");
+        let url = meme.blank.replace(/(\.png|\.jpg)$/, "");
         if (response.memeCompoenent.length >= 1) {
-          let string = "/";
-          response.memeCompoenent.map((component) => {
-            string += component + "/";
-          });
-          string = string.replaceAll(" ", "_");
-          url += string;
+          let string = response.memeCompoenent
+            .map((component) => encodeURIComponent(component.replaceAll(" ", "_")))
+            .join("/");
+          url += `/${string}`;
         }
         setUrl(url);
         console.log(url);
       }
     }
   }, [response.meme, response.memeId, response.memeCompoenent, memes]);
+  
 
   return !response.meme ? (
     <motion.div
